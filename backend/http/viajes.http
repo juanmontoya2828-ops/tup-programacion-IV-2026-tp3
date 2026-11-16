@@ -1,0 +1,84 @@
+@baseUrl = http://localhost:3000/api
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "email": "juan@example.com", "password": "123456" }
+
+###
+@token = {{login.response.body.token}}
+
+### Listar todos
+GET {{baseUrl}}/viajes
+Authorization: Bearer {{token}}
+
+### Filtrar por vehículo
+GET {{baseUrl}}/viajes?vehiculo_id=1
+Authorization: Bearer {{token}}
+
+### Filtrar por conductor
+GET {{baseUrl}}/viajes?conductor_id=1
+Authorization: Bearer {{token}}
+
+### Obtener uno
+GET {{baseUrl}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Crear (requiere vehículo y conductor existentes)
+POST {{baseUrl}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 4,
+  "conductor_id": 2,
+  "fecha_salida": "2026-11-10T05:00",
+  "fecha_llegada": "2026-11-10T19:30",
+  "origen": "La Rioja",
+  "destino": "Tucuman",
+  "kilometros": 420,
+  "observaciones": "Carga de Pasajeros"
+}
+
+### Actualizar
+PUT {{baseUrl}}/viajes/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 1,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00",
+  "fecha_llegada": "2026-11-10T19:00",
+  "origen": "La Rioja",
+  "destino": "Córdoba",
+  "kilometros": 452,
+  "observaciones": "Demora por tránsito"
+}
+
+### Eliminar
+DELETE {{baseUrl}}/viajes/1
+Authorization: Bearer {{token}}
+
+### Error 400: llegada anterior a salida
+POST {{baseUrl}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 1, "conductor_id": 1,
+  "fecha_salida": "2026-11-10T18:00", "fecha_llegada": "2026-11-10T08:00",
+  "origen": "A", "destino": "B", "kilometros": 10
+}
+
+### Error 404: vehículo inexistente
+POST {{baseUrl}}/viajes
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "vehiculo_id": 9999, "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00", "fecha_llegada": "2026-11-10T18:00",
+  "origen": "A", "destino": "B", "kilometros": 10
+}
