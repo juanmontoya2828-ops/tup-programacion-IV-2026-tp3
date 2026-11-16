@@ -1,0 +1,70 @@
+@baseUrl = http://localhost:3000/api
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "email": "juan@example.com", "password": "123456" }
+
+###
+@token = {{login.response.body.token}}
+
+### Listar
+GET {{baseUrl}}/vehiculos
+Authorization: Bearer {{token}}
+
+### Obtener uno
+GET {{baseUrl}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### Crear
+POST {{baseUrl}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Mercedes-Benz",
+  "modelo": "Sprinter 515",
+  "patente": "AE456FG",
+  "anio": 2022,
+  "capacidad_carga": 1500
+}
+
+### Actualizar
+PUT {{baseUrl}}/vehiculos/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "marca": "Mercedes-Benz",
+  "modelo": "Sprinter 516",
+  "patente": "AB123CD",
+  "anio": 2023,
+  "capacidad_carga": 1800
+}
+
+### Historial de viajes del vehículo
+GET {{baseUrl}}/vehiculos/1/viajes
+Authorization: Bearer {{token}}
+
+### Total de kilómetros del vehículo
+GET {{baseUrl}}/vehiculos/1/kilometros
+Authorization: Bearer {{token}}
+
+### Eliminar
+DELETE {{baseUrl}}/vehiculos/1
+Authorization: Bearer {{token}}
+
+### Error 400: validación
+POST {{baseUrl}}/vehiculos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{ "marca": "", "modelo": "X", "patente": "123", "anio": 1900, "capacidad_carga": -5 }
+
+### Error 401: sin token
+GET {{baseUrl}}/vehiculos
+
+### Error 404: no existe
+GET {{baseUrl}}/vehiculos/9999
+Authorization: Bearer {{token}}
