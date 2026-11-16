@@ -1,0 +1,69 @@
+@baseUrl = http://localhost:3000/api
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{ "email": "juan@example.com", "password": "123456" }
+
+###
+@token = {{login.response.body.token}}
+
+### Listar
+GET {{baseUrl}}/conductores
+Authorization: Bearer {{token}}
+
+### Obtener uno
+GET {{baseUrl}}/conductores/1
+Authorization: Bearer {{token}}
+
+### Crear
+POST {{baseUrl}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellido": "Villa",
+  "numero_documento": "35484424",
+  "numero_licencia": "LIC-0003",
+  "fecha_alta_licencia": "2020-03-15",
+  "fecha_vencimiento_licencia": "2028-03-15"
+}
+
+### Actualizar
+PUT {{baseUrl}}/conductores/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellido": "Gómez",
+  "numero_documento": "30123456",
+  "numero_licencia": "LIC-0001",
+  "fecha_alta_licencia": "2020-03-15",
+  "fecha_vencimiento_licencia": "2029-03-15"
+}
+
+### Historial de viajes del conductor
+GET {{baseUrl}}/conductores/1/viajes
+Authorization: Bearer {{token}}
+
+### Total de kilómetros del conductor
+GET {{baseUrl}}/conductores/1/kilometros
+Authorization: Bearer {{token}}
+
+### Eliminar
+DELETE {{baseUrl}}/conductores/1
+Authorization: Bearer {{token}}
+
+### Error 400: vencimiento anterior al alta
+POST {{baseUrl}}/conductores
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "nombre": "Ana", "apellido": "Ruiz", "numero_documento": "123",
+  "numero_licencia": "LIC-0002",
+  "fecha_alta_licencia": "2024-01-01", "fecha_vencimiento_licencia": "2020-01-01"
+}
