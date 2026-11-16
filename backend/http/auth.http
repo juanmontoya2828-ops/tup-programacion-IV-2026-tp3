@@ -1,0 +1,45 @@
+@baseUrl = http://localhost:3000/api
+
+### Registro
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Juan Pérez",
+  "email": "juan@example.com",
+  "password": "123456"
+}
+
+### Login (guarda el token para usarlo abajo)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "juan@example.com",
+  "password": "123456"
+}
+
+### Usuario autenticado
+@token = {{login.response.body.token}}
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+
+### Error 400: datos inválidos
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "",
+  "email": "no-es-un-email",
+  "password": "123"
+}
+
+### Error 401: credenciales incorrectas
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "juan@example.com",
+  "password": "incorrecta"
+}
