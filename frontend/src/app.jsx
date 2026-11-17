@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Navbar from './navbar';
-import ProtectedRoute from './protectedroute';
-import Home from './home';
-import Login from './login';
-import Register from './register';
-import Vehiculos from './vehiculos';
-import Conductores from './conductores';
-import Viajes from './viajes';
+import Navbar from './Navbar';
+import ProtectedRoute from './ProtectedRoute';
+import Home from './Home';
+import Login from './Login';
+import Register from './Register';
+import Vehiculos from './Vehiculos';
+import Conductores from './Conductores';
+import Viajes from './Viajes';
 
 export default function App() {
   return (
