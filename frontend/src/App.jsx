@@ -1,9 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Navbar from './Navbar';
-import ProtectedRoute from './ProtectedRoute';
-import Home from './Home';
-import Login from './Login';
-import Register from './Register';
+import Navbar from './navbar';
+import ProtectedRoute from './protectedroute';
+import Home from './home';
+import Login from './login';
+import Register from './register';
+import Vehiculos from './vehiculos';
+import Conductores from './conductores';
+import Viajes from './viajes';
 
 export default function App() {
   return (
@@ -23,33 +26,9 @@ export default function App() {
       <Route path="/register" element={<Register />} />
 
       <Route element={<ProtectedRoute />}>
-        <Route
-          path="/vehiculos"
-          element={
-            <div className="card">
-              <h2>Vehículos</h2>
-              <p>Módulo en construcción...</p>
-            </div>
-          }
-        />
-        <Route
-          path="/conductores"
-          element={
-            <div className="card">
-              <h2>Conductores</h2>
-              <p>Módulo en construcción...</p>
-            </div>
-          }
-        />
-        <Route
-          path="/viajes"
-          element={
-            <div className="card">
-              <h2>Viajes</h2>
-              <p>Módulo en construcción...</p>
-            </div>
-          }
-        />
+        <Route path="/vehiculos" element={<Vehiculos />} />
+        <Route path="/conductores" element={<Conductores />} />
+        <Route path="/viajes" element={<Viajes />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
